@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        form {
+          text-align: center;
+        }
+    
+        ul {
+          list-style-type: none;
+          padding: 0;
+        }
+    
+        li {
+          margin-bottom: 00px;
+          padding: 10px;
+          border: 2px solid black;
+          border-radius: 10px;
+        }
+    
+        .completed {
+          text-decoration: line-through;
+          color: #393535;
+        }
+    
+        .delete {
+          float: right;
+          background-color: #e11d0f;
+          color: rgb(39, 31, 31);
+          border: none;
+          padding: 6px 6px;
+          border-radius: 10px;
+          cursor: pointer;
+        }
+    
+        .delete:hover {
+          background-color: #e7dddd;
+        }
+      </style>
+
+</head>
+<body>
+      <h1>To-Do List</h1>
+      <form>
+        <input type="text" id="new-item">
+        <button type="button" onclick="addItem()">Add</button>
+      </form>
+      <ul id="list">
+      </ul>
+      <script>
+        let list = document.getElementById('list');
+    
+        function addItem() {
+          let newItem = document.getElementById('new-item').value;
+          if (newItem !== '') {
+            let li = document.createElement('li');
+            li.textContent = newItem + ' (' + getFormattedDate() + ')';
+            li.addEventListener('click', completeItem);
+            let deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', deleteItem);
+            li.appendChild(deleteButton);
+            list.appendChild(li);
+            document.getElementById('new-item').value = '';
+          }
+        }
+    
+        function completeItem() {
+          this.classList.toggle('completed');
+        }
+    
+        function deleteItem() {
+          this.parentNode.remove();
+        }
+    
+        function getFormattedDate() {
+          let now = new Date();
+          let day = now.getDate().toString().padStart(2, '0');
+          let month = (now.getMonth() + 1).toString().padStart(2, '0');
+          let year = now.getFullYear();
+          let hours = now.getHours().toString().padStart(2, '0');
+          let minutes = now.getMinutes().toString().padStart(2, '0');
+          let seconds = now.getSeconds().toString().padStart(2, '0');
+          return day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+      </script>
+</body>
+</html>
